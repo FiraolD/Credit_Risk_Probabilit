@@ -3,4 +3,8 @@ numpy
 seaborn
 matplotlib
 datetime
+scikit-learn 
+pandas 
+xverse 
+woe
 
