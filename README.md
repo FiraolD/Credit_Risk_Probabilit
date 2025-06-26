@@ -20,3 +20,16 @@ Without a labeled "default" outcome in the dataset, it's impossible to train a s
 **Complex models** like Gradient Boosting Machines (GBM) offer **higher predictive accuracy**, especially with diverse and nonlinear features. However, they act more like “black boxes,” making them harder to explain, validate, and regulate. In regulated contexts, the optimal strategy is often to balance both: start with interpretable models, validate their limitations, and then justify the use of more complex models with proper documentation, post-hoc explanation tools (like SHAP), and monitoring systems.
 
 
+TASK_2
+
+Based on the output of the EDA, here are the top 5 most important insights:
+
+1-->Dominant Currency and Country: All transactions are in UGX and originate from country code 256. This suggests the data is specific to a particular region (likely Uganda).
+
+2-->High Frequency of Financial Services and Airtime Transactions: The product categories 'financial_services' and 'airtime' make up the vast majority of transactions, indicating these are the core services being utilized.
+
+3-->Channel 3 is the Most Used Channel: 'ChannelId_3' is the dominant channel for transactions, significantly more so than other channels.
+
+4-->Transactions Peak During Business Hours: The plot of transactions by hour shows a clear peak during typical business hours, suggesting that transaction activity is correlated with the workday.
+
+5-->Strong Correlation Between Amount and Value: There is a very high positive correlation (0.99) between the 'Amount' and 'Value' of transactions, indicating that these two features are nearly identical or directly proportional. Additionally, both 'Amount' and 'Value' show a moderate positive correlation with 'FraudResult', which could be a significant indicator for fraud detection.
