@@ -4,7 +4,17 @@ import unittest
 import pandas as pd
 import numpy as np
 from datetime import datetime
-from src.data_processing import DataCleaner, AggregateFeaturesCreator
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
+
+from src.Data_Processor import   (  
+    AggregateCustomerFeatures,
+    TimeBasedFeatureExtractor,
+    CategoricalEncoder,
+    MissingValueImputer,
+    NumericalScaler
+)
 
 
 class TestDataProcessing(unittest.TestCase):
@@ -22,29 +32,10 @@ class TestDataProcessing(unittest.TestCase):
                 '2023-01-03T12:00:00Z'
             ]
         })
-    
-    def test_data_cleaner(self):
-        """Test that DataCleaner correctly processes data types"""
-        cleaner = DataCleaner()
-        cleaned = cleaner.transform(self.sample_data)
-        
-        # Check that transaction time was converted to datetime
-        self.assertTrue(pd.api.types.is_datetime64_any_dtype(cleaned['TransactionStartTime']))
-        
-        # Check that numeric columns were converted to float
-        self.assertTrue(np.issubdtype(cleaned['Amount'].dtype, np.floating))
-        self.assertTrue(np.issubdtype(cleaned['Value'].dtype, np.floating))
-        
-        # Check that AbsoluteAmount was created
-        self.assertIn('AbsoluteAmount', cleaned.columns)
-        self.assertEqual(cleaned.iloc[0]['AbsoluteAmount'], 100)
-        self.assertEqual(cleaned.iloc[1]['AbsoluteAmount'], 200)
-        self.assertEqual(cleaned.iloc[2]['AbsoluteAmount'], 50)
-    
+
     def test_aggregate_features_creator(self):
         """Test that AggregateFeaturesCreator creates correct aggregated features"""
-        cleaner = DataCleaner()
-        cleaned = cleaner.transform(self.sample_data)
+    
         
         aggregator = AggregateFeaturesCreator()
         aggregated = aggregator.transform(cleaned)
@@ -67,7 +58,7 @@ class TestDataProcessing(unittest.TestCase):
         data_with_missing = self.sample_data.copy()
         data_with_missing.loc[0, 'Amount'] = np.nan
         
-        mv_handler = MissingValueHandler(strategy='median')
+        mv_handler = MissingValueImputer(strategy='median')
         mv_handler.fit(data_with_missing)
         filled = mv_handler.transform(data_with_missing)
         
@@ -76,11 +67,10 @@ class TestDataProcessing(unittest.TestCase):
         
     def test_time_based_features(self):
         """Test that time-based features are correctly extracted"""
-        cleaner = DataCleaner()
-        cleaned = cleaner.transform(self.sample_data)
+
         
         time_extractor = TimeBasedFeatureExtractor()
-        time_features = time_extractor.transform(cleaned)
+        time_features = time_extractor.transform(text)
         
         # Check that all time-based features were added
         expected_features = ['TransactionHour', 'TransactionDay', 'TransactionMonth',
