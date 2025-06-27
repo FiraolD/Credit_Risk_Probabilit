@@ -7,4 +7,11 @@ scikit-learn
 pandas 
 xverse 
 woe
+mlflow
+category-encoders
+fastapi
+matplotlib
+jupyter
+pytest
+flake8
 
