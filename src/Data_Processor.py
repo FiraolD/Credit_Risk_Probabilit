@@ -100,59 +100,6 @@ class AggregateCustomerFeatures(BaseEstimator, TransformerMixin):
         
         return df
 
-
-class RFMClusterCreator(BaseEstimator, TransformerMixin):
-    """Create proxy credit risk label using RFM clustering"""
-    
-    def __init__(self, n_clusters=3):
-        self.n_clusters = n_clusters
-        self.scaler = StandardScaler()
-        self.kmeans = None
-        self.rfm_labels_ = None
-        
-    def fit(self, X, y=None):
-        # Calculate RFM values
-        now = X['TransactionStartTime'].max() + pd.Timedelta(days=1)
-        rfm = X.groupby('CustomerId').agg({
-            'TransactionStartTime': lambda x: (now - x.max()).days,
-            'TransactionId': 'count',
-            'Amount': 'sum'
-        }).reset_index()
-        
-        rfm.columns = ['CustomerId', 'Recency', 'Frequency', 'Monetary']
-        
-        # Replace infinities and fill NA
-        rfm[['Recency', 'Frequency', 'Monetary']] = rfm[['Recency', 'Frequency', 'Monetary']].replace([np.inf, -np.inf], np.nan)
-        rfm = rfm.fillna(0)
-        
-        # Scale RFM values
-        rfm_scaled = self.scaler.fit_transform(rfm[['Recency', 'Frequency', 'Monetary']])
-        
-        # Cluster customers
-        self.kmeans = KMeans(n_clusters=self.n_clusters, random_state=42)
-        clusters = self.kmeans.fit_predict(rfm_scaled)
-        rfm['Cluster'] = clusters
-        
-        # Score clusters by risk
-        cluster_means = rfm.groupby('Cluster')[['Recency', 'Frequency', 'Monetary']].mean()
-        cluster_means['RiskScore'] = (cluster_means['Recency'] / (cluster_means['Frequency'] + 1)) * cluster_means['Monetary']
-        high_risk_cluster = cluster_means.sort_values(by='RiskScore', ascending=False).index[0]
-        
-        # Label high-risk customers
-        rfm['is_high_risk'] = (rfm['Cluster'] == high_risk_cluster).astype(int)
-        
-        # Store labels for merging
-        self.rfm_labels_ = rfm[['CustomerId', 'is_high_risk']]
-        
-        return self
-    
-    def transform(self, X):
-        df = X.copy()
-        # Merge RFM labels into main dataframe
-        df = df.merge(self.rfm_labels_, on='CustomerId', how='left')
-        return df
-
-
 class CategoricalEncoder(BaseEstimator, TransformerMixin):
     """Processes categorical features using one-hot encoding"""
     
