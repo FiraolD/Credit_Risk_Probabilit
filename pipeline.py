@@ -21,7 +21,7 @@ from src.Data_Processor import (
     MissingValueHandler,
     TimeFeatureExtractor,
     AggregateCustomerFeatures,
-    RFMClusterCreator,
+    #RFMClusterCreator,
     CategoricalEncoder,
     FeatureScaler
 )
@@ -66,7 +66,7 @@ def build_feature_pipeline():
         ('missing_imputation', MissingValueHandler(strategy='median')),
         ('time_extractor', TimeFeatureExtractor()),
         ('aggregate_features', AggregateCustomerFeatures(group_col='CustomerId')),
-        ('rfm_creator', RFMClusterCreator(n_clusters=4)),
+        #('rfm_creator', RFMClusterCreator(n_clusters=4)),
         ('categorical_encoder', CategoricalEncoder(cat_cols=['ProviderId', 'ProductId', 'ChannelId'])),
         ('feature_scaler', FeatureScaler(scaler_type='standard'))
     ])
