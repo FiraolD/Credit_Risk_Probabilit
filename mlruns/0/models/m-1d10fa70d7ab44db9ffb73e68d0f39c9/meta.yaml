@@ -1,0 +1,10 @@
+artifact_location: file:D:/PYTHON PROJECTS/KIAM PROJECTS/Credit_Risk_Probabilit/mlruns/0/models/m-1d10fa70d7ab44db9ffb73e68d0f39c9/artifacts
+creation_timestamp: 1751094234998
+experiment_id: '0'
+last_updated_timestamp: 1751094239691
+model_id: m-1d10fa70d7ab44db9ffb73e68d0f39c9
+model_type: null
+name: random_forest
+source_run_id: c2af5755846c41f6967316add205b59d
+status: 2
+status_message: null

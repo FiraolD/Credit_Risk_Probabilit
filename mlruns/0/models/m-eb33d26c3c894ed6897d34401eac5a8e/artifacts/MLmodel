@@ -1,0 +1,22 @@
+artifact_path: file:D:/PYTHON PROJECTS/KIAM PROJECTS/Credit_Risk_Probabilit/mlruns/0/models/m-eb33d26c3c894ed6897d34401eac5a8e/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.5
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.0
+mlflow_version: 3.1.1
+model_id: m-eb33d26c3c894ed6897d34401eac5a8e
+model_size_bytes: 74387654
+model_uuid: m-eb33d26c3c894ed6897d34401eac5a8e
+prompts: null
+run_id: 691dfd5e56df4b1fb599db2e0df2dc3d
+utc_time_created: '2025-06-28 06:48:51.732258'
