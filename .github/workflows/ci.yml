@@ -1,0 +1,31 @@
+# .github/workflows/ci.yml
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run linter (flake8)
+        run: |
+          flake8 src/Trainer/Model_trainer.py src/Data_Processor.py src/api/main.py tests/test_data_processing.py
