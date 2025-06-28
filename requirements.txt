@@ -13,5 +13,8 @@ fastapi
 matplotlib
 jupyter
 pytest
-flake8
+flake
+uvicorn
+pydanti
+
 
