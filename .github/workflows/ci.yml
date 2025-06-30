@@ -28,4 +28,4 @@ jobs:
 
       - name: Run linter (flake8)
         run: |
-          flake8 src/Trainer/Model_trainer.py src/Data_Processor.py src/api/main.py tests/test_data_processing.py
+          flake8 src/Trainer/Model_trainer.py src/Data_Processor.py src/api/main.py src/pipeline.py src/Task-4/proxy_terget_variable.py
