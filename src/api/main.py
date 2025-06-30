@@ -45,17 +45,23 @@ class CreditRiskResponse(BaseModel):
 
 @app.post("/predict", response_model=CreditRiskResponse)
 def predict(request: CreditRiskRequest):
-    """
-    Predict if a customer is high-risk based on transaction data
-    """
-    # Convert request to DataFrame
-    input_data = pd.DataFrame([request.dict()])
-    
-    # Predict
-    proba = model.predict_proba(input_data)[0][1]
-    prediction = (proba > 0.5).astype(int)
-
-    return {
-        "is_high_risk": int(prediction),
-        "risk_probability": float(proba)
-    }
+    try:
+        print("✅ Request received:", request.dict())
+        
+        # Convert request to DataFrame
+        input_data = pd.DataFrame([request.dict()])
+        print("✅ Input DataFrame:\n", input_data.head())
+        
+        # Predict
+        proba = model.predict_proba(input_data)[0][1]
+        prediction = (proba > 0.5).astype(int)
+        
+        print(f"✅ Prediction: {prediction}, Probability: {proba}")
+        
+        return {
+            "is_high_risk": int(prediction),
+            "risk_probability": float(proba)
+        }
+    except Exception as e:
+        print(f"❌ Error during prediction: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
