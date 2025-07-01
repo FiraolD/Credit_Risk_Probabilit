@@ -35,3 +35,98 @@ Based on the output of the EDA, here are the top 5 most important insights:
 4.	Transactions Peak During Business Hours: The plot of transactions by hour shows a clear peak during typical business hours, suggesting that transaction activity is correlated with the workday.
 
 5.	Strong Correlation Between Amount and Value: There is a very high positive correlation (0.99) between the 'Amount' and 'Value' of transactions, indicating that these two features are nearly identical or directly proportional. Additionally, both 'Amount' and 'Value' show a moderate positive correlation with 'FraudResult', which could be a significant indicator for fraud detection.
+
+
+Credit_Risk_Probabilit/
+├── data/
+│   └── data.csv               # Raw transaction data
+│   └── processed_data.csv
+│   └── processed_data_with_risk.csv  # Feature-engineered dataset
+├── models/
+│   └── random_forest_best.pkl     # Trained and saved model
+├── src/
+│   ├── Data_Processor.py          # Custom feature transformers
+│   ├── Trainer/
+|   |    └── Model_trainer.py      # Model training and tracking
+│   ├──Task-4  
+│   │    └── proxy_target_variable.py 
+│   │  
+│   ├──pipeline.py
+│   │
+│   └── api/
+│       ├── main.py                # FastAPI service
+│       └── pydantic_models.py     # Request/response validation
+├── tests/
+│   └── test_data_processing.py   # Unit tests
+├── notebooks/
+│   └── 1.0-eda.ipynb             # Exploratory Data Analysis
+├── .github/
+│   └── workflows/
+│       └── ci.yml                 # GitHub Actions CI/CD workflow
+├── Dockerfile                     # Containerization
+├── docker-compose.yml             # Local development orchestration
+├── requirements.txt               # Python dependencies
+└── README.md                      # This file
+
+
+
+🧩 Task Breakdown 
+Task 1
+✔️ Understanding Credit Risk and Basel II Accord's impact on model interpretability
+
+Task 2
+✔️ EDA: Identified patterns, outliers, and insights from transaction data
+
+Task 3
+✔️ Feature Engineering: Built custom transformers for preprocessing
+
+Task 4
+✔️ Proxy Target Creation: Used KMeans clustering to create is_high_risk label
+
+Task 5
+✔️ Model Training and Tracking: Trained multiple models with hyperparameter tuning
+
+Task 6
+✔️ Deployment and CI/CD: Built FastAPI service and added testing + deployment
+
+
+ 🚀 How to Run 
+1. 📥 Clone the Repository 
+bash
+git clone https://github.com/rediett/Credit_Risk_Probabilit.git 
+cd Credit_Risk_Probabilit
+ 
+2. 🔧 Install Dependencies 
+Make sure you have Python 3.9+ installed. 
+bash 
+pip install -r requirements.txt
+ 
+3. 🧹 Preprocess Data 
+Run your feature engineering pipeline: 
+bash
+python src/Data_Processor.py
+ 
+4. 🧪 Train Models 
+Train and evaluate models using: 
+bash
+cd src/Trainer
+python Model_trainer.py 
+
+This script will: 
+
+ - Load data
+ - Build pipelines
+ - Train Random Forest and Logistic Regression
+ - Track experiments using MLflow  
+
+5. 🐳 Run the API Locally 
+
+Start the FastAPI service: 
+bash
+uvicorn src.api.main:app --reload
+
+Then open:
+👉 http://localhost:8000/docs  
+
+Test the /predict endpoint with sample input. 
+
